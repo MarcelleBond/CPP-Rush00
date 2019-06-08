@@ -17,6 +17,8 @@
 //     }
 // }
 
+//need to move to linux
+
 int main()
 {
     std::srand(time(0));

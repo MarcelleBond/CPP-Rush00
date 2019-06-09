@@ -12,11 +12,11 @@
 int main()
 {
      std::srand(time(0));
-    int numVillain = 5;
+    int numVillain = rand() % 20 + 1;
     Villain villain[numVillain];
     // WINDOW *vin;
     wborder(initscr(), '|', '|', '-', '-', '+', '+', '+', '+');
-    int x, y, c, score = 0;
+    int x, y, c, score = 0, lives = 1;
     // int c;
     noecho();
     nodelay(stdscr, true);
@@ -31,7 +31,7 @@ int main()
     std::string HeroShip = Hero.getHero();
     printw(HeroShip.c_str());
     int add;
-    for (int i = 1; i < 6; i++)
+    for (int i = 1; i <= numVillain; i++)
     {
         add = x + i;
         villain[i] = Villain(0, add);
@@ -40,23 +40,25 @@ int main()
     /////////// START GAME LOOP
     while ((c = getch()) != 27)
     {
+        mvprintw(2,1,"live: %d", lives);
         if (c == 97){
 
                 /* code */
-                    mvprintw(Hero.getY()-1,Hero.getX(),"|");
+                    mvprintw(Hero.getY() - 1, Hero.getX(), "|");
                 if (Hero.Shoot(villain, numVillain)){
                     score += 5;
-                    mvprintw(1,1,"score: %d", score);
-                    mvprintw(40,109,"PEW PEW");
+                    // lives = 0;
+                    mvprintw(2, 1, " %d", villain.getY)
+                    mvprintw(1, 1,"score: %d", score);
                 }
                 else{
-                    mvprintw(40,109,"dumbass");
+                    mvprintw(40, 109, "dumbass");
                 }
 
         }
         if (c == 261)
         {
-            mvprintw(Hero.getY()-1,Hero.getX()," ");
+            mvprintw(Hero.getY() - 1, Hero.getX(), " ");
             mvprintw(y, x, " ");
             move(y, ++x);
             Hero.setCoordinates(y, x);

@@ -15,7 +15,7 @@ public:
     hero(int y, int x);
     ~hero();
     std::string getHero();
-    bool Shoot(Villain *villain);
+    bool Shoot(Villain *villain, int Numvillains);
     void setCoordinates(int y, int x);
     int getX();
     int getY();

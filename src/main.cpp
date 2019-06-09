@@ -22,9 +22,10 @@
 int main()
 {
     std::srand(time(0));
-    Villain villain[5];
+    wborder(initscr(), '|', '|', '-', '-', '+', '+', '+', '+');
+    int Numvillains = 5;
+    Villain villain[Numvillains];
     // WINDOW *vin;
-    initscr();
     int x, y;
     int c;
     noecho();
@@ -54,7 +55,7 @@ int main()
 
                 /* code */
                     mvprintw(Hero.getY()-1,Hero.getX(),"|");
-                if (Hero.Shoot(villain)){
+                if (Hero.Shoot(villain, Numvillains)){
 
                     mvprintw(40,109,"PEW PEW");
                 }

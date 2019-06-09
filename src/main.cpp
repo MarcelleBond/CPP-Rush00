@@ -1,32 +1,23 @@
 #include <cstdio>
 #include <iostream>
-#include <chrono>
-#include <thread>
+// #include <chrono>
+// #include <thread>
 #include <functional>
-#include <curses.h>
+#include <ncurses.h>
 #include "../includes/hero.hpp"
 #include "../includes/Villain.hpp"
+#include <stdlib.h>
 
-
-// void DisplayMove(Villain *villain)
-// {
-//     for (int i = 0; i < sizeof(villain); i++)
-//     {
-//         villain[i].VillainMove();
-//         /* code */
-//     }
-// }
-
-//need to move to linux
 
 int main()
 {
-    std::srand(time(0));
-    Villain villain[5];
+     std::srand(time(0));
+    int numVillain = 5;
+    Villain villain[numVillain];
     // WINDOW *vin;
-    initscr();
-    int x, y;
-    int c;
+    wborder(initscr(), '|', '|', '-', '-', '+', '+', '+', '+');
+    int x, y, c, score = 0;
+    // int c;
     noecho();
     nodelay(stdscr, true);
     keypad(stdscr, true);
@@ -34,7 +25,6 @@ int main()
     raw();
     getmaxyx(stdscr, y, x);
     move(y / 2, x / 2);
-    // printw("Write something (ESC to escape): ");
     x = x / 2;
     y = y / 2;
     hero Hero = hero(y,x);
@@ -54,8 +44,9 @@ int main()
 
                 /* code */
                     mvprintw(Hero.getY()-1,Hero.getX(),"|");
-                if (Hero.Shoot(villain)){
-
+                if (Hero.Shoot(villain, numVillain)){
+                    score += 5;
+                    mvprintw(1,1,"score: %d", score);
                     mvprintw(40,109,"PEW PEW");
                 }
                 else{
@@ -65,7 +56,7 @@ int main()
         }
         if (c == 261)
         {
-                    mvprintw(Hero.getY()-1,Hero.getX()," ");
+            mvprintw(Hero.getY()-1,Hero.getX()," ");
             mvprintw(y, x, " ");
             move(y, ++x);
             Hero.setCoordinates(y, x);
@@ -73,7 +64,7 @@ int main()
         }
         if (c == 260)
         {
-                    mvprintw(Hero.getY()-1,Hero.getX()," ");
+            mvprintw(Hero.getY()-1,Hero.getX()," ");
             mvprintw(y, x, " ");
             move(y, --x);
             Hero.setCoordinates(y, x);

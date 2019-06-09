@@ -1,8 +1,9 @@
 NAME = ft_retro
 SOURCES = ./src/main.cpp ./src/hero.cpp ./src/Villain.cpp
+FLAGS = -Wall -Werror -Wextra -std=c++98
 
 $(NAME):
-	@g++ -Wall -Werror -Wextra -lncurses $(SOURCES) -o $(NAME)
+	@g++ $(FLAGS) $(SOURCES) -o $(NAME) -lncurses
 	@echo "\033[1;32;4mCOMPILING SUCCESSFUL"
 
 all: $(NAME)

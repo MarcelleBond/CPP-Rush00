@@ -1,6 +1,7 @@
 #include <string>
 #include "../includes/hero.hpp"
-
+#include "../includes/Villain.hpp"
+#include <ncurses.h>
 
 hero::hero(int y, int x){
     this->ship = "^";
@@ -12,22 +13,29 @@ hero::hero(int y, int x){
 hero::~hero(){}
 
 
-bool hero::Shoot(Villain *villain){
-//     for (size_t i = 0; i < sizeof(villain); i++)
-// {
-//     /* code */
-//     mvprintw(villain[i].getY() ,villain[i].getX(), " ");
-//     villain[i].setCoordinates(villain[i].getY()+1 ,villain[i].getX());
-//     mvprintw(villain[i].getY(),villain[i].getX(), villain[i].getVillain().c_str());
-
-// }
+bool hero::Shoot(Villain *villain, int numVillain){
+    for (int i = 0; i <= numVillain; i++)
+{
+    /* code */
+    mvprintw(villain[i].getY() ,villain[i].getX(), " ");
+    villain[i].setCoordinates(villain[i].getY()+1 ,villain[i].getX());
+    mvprintw(villain[i].getY(),villain[i].getX(), villain[i].getVillain().c_str());
+    if (villain[i].getY() == this->y) 
+    {
+        mvprintw(0, 0, " You dead niggah");
+        sleep(5);
+        refresh();
+        exit(EXIT_FAILURE);
+    }
+}
     
-    for (size_t i = 0; i < sizeof(villain); i++)
+    for (int i = 0; i < numVillain; i++)
     {
         if (villain[i].getX() == this->x){
             mvprintw(villain[i].getY(), villain[i].getX(), " ");
             villain[i].setCoordinates(0,villain[i].getX());
             mvprintw((villain[i].getY()), villain[i].getX(), villain[i].getVillain().c_str());
+
             return true;
         }
     }

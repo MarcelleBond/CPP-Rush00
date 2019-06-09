@@ -1,6 +1,9 @@
 
 #include <string>
-#include "ncurses.h"
+#include <ncurses.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 #ifndef VILLAIN_HPP
 #define VILLAIN_HPP
 

@@ -12,21 +12,14 @@ hero::hero(int y, int x){
 hero::~hero(){}
 
 
-bool hero::Shoot(Villain *villain){
-//     for (size_t i = 0; i < sizeof(villain); i++)
-// {
-//     /* code */
-//     mvprintw(villain[i].getY() ,villain[i].getX(), " ");
-//     villain[i].setCoordinates(villain[i].getY()+1 ,villain[i].getX());
-//     mvprintw(villain[i].getY(),villain[i].getX(), villain[i].getVillain().c_str());
+bool hero::Shoot(Villain *villain, int numVill){
 
-// }
-    
-    for (size_t i = 0; i < sizeof(villain); i++)
+
+    for (int i = 0; i <= numVill; i++)
     {
         if (villain[i].getX() == this->x){
             mvprintw(villain[i].getY(), villain[i].getX(), " ");
-            villain[i].setCoordinates(0,villain[i].getX());
+            villain[i].setCoordinates(2,villain[i].getX());
             mvprintw((villain[i].getY()), villain[i].getX(), villain[i].getVillain().c_str());
             return true;
         }

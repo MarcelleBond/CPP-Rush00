@@ -1,71 +1,91 @@
 #include <cstdio>
 #include <iostream>
 #include <chrono>
-#include <thread>
 #include <functional>
 #include <curses.h>
 #include "../includes/hero.hpp"
 #include "../includes/Villain.hpp"
-
-
-// void DisplayMove(Villain *villain)
-// {
-//     for (int i = 0; i < sizeof(villain); i++)
-//     {
-//         villain[i].VillainMove();
-//         /* code */
-//     }
-// }
-
-//need to move to linux
-
+#include <unistd.h>
 int main()
 {
     std::srand(time(0));
-    Villain villain[5];
+    int numVillains = rand() % 40 + 20;
+    Villain villain[numVillains];
     // WINDOW *vin;
-    initscr();
+    wborder(initscr(), '|', '|', '-', '-', '+', '+', '+', '+');
     int x, y;
     int c;
     noecho();
-    nodelay(stdscr, true);
+   // halfdelay(1);
     keypad(stdscr, true);
     curs_set(0);
     raw();
     getmaxyx(stdscr, y, x);
-    move(y / 2, x / 2);
+    move(y - 2, x / 2);
     // printw("Write something (ESC to escape): ");
     x = x / 2;
-    y = y / 2;
-    hero Hero = hero(y,x);
+    y = y - 2;
+    hero Hero = hero(y, x);
     std::string HeroShip = Hero.getHero();
     printw(HeroShip.c_str());
     int add;
-    for (int i = 1; i < 6; i++)
+    int shift;
+    int VillainY;
+    int score = 0;
+    for (int i = 1; i <= numVillains; i++)
     {
+        VillainY = rand() % 10 + 1;
         add = x + i;
-        villain[i] = Villain(0, add);
+        villain[i] = Villain(VillainY, add);
+        // mvprintw(i, 1, "%d\n", villain[i].getX());
         mvprintw(villain[i].getY(), villain[i].getX(), villain[i].getVillain().c_str());
     }
     /////////// START GAME LOOP
+    mvprintw(1, 1, "SCORE: %d", score);
     while ((c = getch()) != 27)
     {
-        if (c == 97){
 
-                /* code */
-                    mvprintw(Hero.getY()-1,Hero.getX(),"|");
-                if (Hero.Shoot(villain)){
 
-                    mvprintw(40,109,"PEW PEW");
+        {
+           usleep(16666);
+           timeout(60);
+        }
+
+        shift = std::rand() % 1000;
+        if (shift % 3 == 0)
+        {
+
+            for (int i = 0; i <= numVillains; i++)
+            {
+                mvprintw(villain[i].getY(), villain[i].getX(), " ");
+                villain[i].setCoordinates(villain[i].getY() + 1, villain[i].getX());
+                if (villain[i].getY() == Hero.getY())
+                {
+                    // delwin(stdscr);
+                    mvprintw(10, 10, "GAME OVER");
+                    refresh();
+                    delay_output(2000);
+                    exit(0);
                 }
-                else{
-                    mvprintw(40,109,"dumbass");
-                }
+                mvprintw(villain[i].getY(), villain[i].getX(), villain[i].getVillain().c_str());
+                // return true;
+            }
+        }
+        if (c == 97)
 
+        {
+
+            /* code */
+            mvprintw(Hero.getY() - 1, Hero.getX(), "|");
+            if (Hero.Shoot(villain, numVillains))
+            {
+                mvprintw(1, 1, "SCORE: %d", ++score);
+               // mvprintw(40, 109, "PEW PEW");
+            }
         }
         if (c == 261)
         {
-                    mvprintw(Hero.getY()-1,Hero.getX()," ");
+            mvprintw(Hero.getY() - 1, Hero.getX(), " ");
             mvprintw(y, x, " ");
             move(y, ++x);
             Hero.setCoordinates(y, x);
@@ -73,18 +93,15 @@ int main()
         }
         if (c == 260)
         {
-                    mvprintw(Hero.getY()-1,Hero.getX()," ");
+            mvprintw(Hero.getY() - 1, Hero.getX(), " ");
+            mvprintw(Hero.getY() + 8, Hero.getX(), " ");
             mvprintw(y, x, " ");
             move(y, --x);
             Hero.setCoordinates(y, x);
             printw(HeroShip.c_str());
         }
         move(10, 0);
-        //  printw("Keycode : %d, and the character: %c ", c,c);
         move(0, 0);
-        // printw("Write something (ESC to escape): ");
-
-        //timer_start(Di, 1000);
         refresh();
     }
     /////////// END GAME LOOP

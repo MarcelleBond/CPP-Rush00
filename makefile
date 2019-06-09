@@ -2,7 +2,7 @@ NAME = ft_retro
 SOURCES = ./src/main.cpp ./src/hero.cpp ./src/Villain.cpp
 
 $(NAME):
-	@g++ -Wall -Werror -Wextra -lncurses $(SOURCES) -o $(NAME)
+	@g++ -Wall -Werror -Wextra -lncurses -std=c++98 $(SOURCES) -o $(NAME)
 	@echo "\033[1;32;4mCOMPILING SUCCESSFUL"
 
 all: $(NAME)

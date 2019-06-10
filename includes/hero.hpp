@@ -14,11 +14,14 @@ private:
 public:
     hero(int y, int x);
     ~hero();
+    hero(hero const &src);
+    hero & operator=(hero const &src);
     std::string getHero();
-    bool Shoot(Villain *villain, int numVillain);
+    bool Shoot(Villain *villain[], int numVillain);
     void setCoordinates(int y, int x);
     int getX();
     int getY();
+    // hero	&operator=(hero const &rhs);		// Canonical
 };
 
 

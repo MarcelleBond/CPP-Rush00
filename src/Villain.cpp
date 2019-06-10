@@ -15,6 +15,17 @@ Villain::Villain(int y, int x){
 
 }
 
+Villain::Villain(Villain const &src){
+*this = src;
+}
+
+Villain &Villain::operator=(Villain const &src){
+    if (this != &src){
+        *this = src;
+    }
+    return (*this);
+}
+
 Villain::~Villain(){}
 
 int Villain::getX(){
@@ -23,7 +34,7 @@ int Villain::getX(){
 }
 
 int Villain::getY(){
-    // mvprintw(40,40, "Y: %d", this->y);
+    mvprintw(40,40, "VIllian GETY %d", this->y);
     return this->y;
 }
 std::string Villain::getVillain(){
@@ -34,5 +45,9 @@ void Villain::setCoordinates(int y, int x){
     this->y = y;
     this->x = x;
 }
+
+// Villain &Villain::operator=(Villain const &rhs) {
+//     this->operator= = rhs;
+// }
 
 

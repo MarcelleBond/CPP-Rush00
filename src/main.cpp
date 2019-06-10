@@ -11,50 +11,77 @@
 
 int main()
 {
-     std::srand(time(0));
-    int numVillain = rand() % 20 + 1;
-    Villain villain[numVillain];
+    int secondsLeft = 0;
+    int seconds = 0;
+    int seconds2 = 0;
+
+    std::srand(time(0));
+    int numVillain = 6;
+    Villain *villain[numVillain];
     // WINDOW *vin;
     wborder(initscr(), '|', '|', '-', '-', '+', '+', '+', '+');
-    int x, y, c, score = 0, lives = 1;
+    int x, y, c, add, score = 0, lives = 1;
     // int c;
     noecho();
     nodelay(stdscr, true);
     keypad(stdscr, true);
     curs_set(0);
-    raw();
+    //raw();
     getmaxyx(stdscr, y, x);
-    move(y / 2, x / 2);
     x = x / 2;
     y = y / 2;
-    hero Hero = hero(y,x);
+    move(y, x);
+    hero Hero = hero(y * 2, x);
     std::string HeroShip = Hero.getHero();
     printw(HeroShip.c_str());
-    int add;
-    for (int i = 1; i <= numVillain; i++)
+    // int add;
+    for (int i = 1; i < numVillain; i++)
     {
         add = x + i;
-        villain[i] = Villain(0, add);
-        mvprintw(villain[i].getY(), villain[i].getX(), villain[i].getVillain().c_str());
+        int theY = rand() % 10 + 1;
+        villain[i] = new Villain(theY, add);
+        mvprintw(villain[i]->getY(), villain[i]->getX(), villain[i]->getVillain().c_str());
+        
     }
     /////////// START GAME LOOP
     while ((c = getch()) != 27)
     {
+        mvprintw(3,1,"Seconds: %d", seconds);
+        mvprintw(4,1,"milli seconds: %d", secondsLeft);
+        secondsLeft++;
+        napms(1);
+       if (secondsLeft == 1000)
+       {
+           secondsLeft = 0;
+           seconds++;
+           seconds2++;
+       }
+       if (seconds2 == 1)
+       {
+           for (int i = 0; i <= numVillain; i++)
+            {
+                mvprintw(villain[i]->getY() ,villain[i]->getX(), " ");
+                villain[i]->setCoordinates(villain[i]->getY() + 1, villain[i]->getX());
+                mvprintw(villain[i]->getY(),villain[i]->getX(), villain[i]->getVillain().c_str());
+                if (villain[i]->getY() == Hero.getY()) 
+                {
+                    lives = 0;
+                    mvprintw(2, 1, " live: %d", lives);
+                    mvprintw(y, x, " GAME OVER!");
+                    refresh();
+                    sleep(5);
+                    exit(EXIT_FAILURE);
+                }
+            }
+            seconds2 = 0;
+       }
         mvprintw(2,1,"live: %d", lives);
-        if (c == 97){
-
-                /* code */
-                    mvprintw(Hero.getY() - 1, Hero.getX(), "|");
-                if (Hero.Shoot(villain, numVillain)){
-                    score += 5;
-                    // lives = 0;
-                    mvprintw(2, 1, " %d", villain.getY)
-                    mvprintw(1, 1,"score: %d", score);
+        if (c == 32){
+            mvprintw(Hero.getY() - 1, Hero.getX(), "|");
+            if (Hero.Shoot(villain, numVillain)) {
+                score += 5;
+                mvprintw(1, 1,"score: %d", score);
                 }
-                else{
-                    mvprintw(40, 109, "dumbass");
-                }
-
         }
         if (c == 261)
         {
@@ -72,10 +99,6 @@ int main()
             Hero.setCoordinates(y, x);
             printw(HeroShip.c_str());
         }
-        move(10, 0);
-        //  printw("Keycode : %d, and the character: %c ", c,c);
-        move(0, 0);
-        // printw("Write something (ESC to escape): ");
 
         //timer_start(Di, 1000);
         refresh();

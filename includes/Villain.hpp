@@ -7,6 +7,7 @@
 #ifndef VILLAIN_HPP
 #define VILLAIN_HPP
 
+
 class Villain
 {
 private:
@@ -18,11 +19,14 @@ public:
     Villain(int y, int x);
     Villain();
     ~Villain();
+    Villain(Villain const &src);
+    Villain &operator=(Villain const &src);
     std::string getVillain();
     
     void setCoordinates(int y, int x);
     int getX();
     int getY();
+    // Villain	&operator=(Villain const &rhs);		// Canonical
 };
 
 #endif

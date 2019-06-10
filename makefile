@@ -1,5 +1,5 @@
 NAME = ft_retro
-SOURCES = ./src/main.cpp ./src/hero.cpp ./src/Villain.cpp
+SOURCES = ./src/main.cpp ./src/hero.cpp ./src/Villain.cpp ./src/obstacle.cpp
 
 $(NAME):
 	@g++ -Wall -Werror -Wextra -lncurses -std=c++98 $(SOURCES) -o $(NAME)

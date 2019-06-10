@@ -15,6 +15,17 @@ Villain::Villain(int y, int x){
 
 }
 
+// Villain::Villain(Villain const &src){
+// *this = src;
+// }
+
+// Villain &Villain::operator=(Villain const &src){
+//     if (this != &src){
+//         *this = src;
+//     }
+//     return (*this);
+// }
+
 Villain::~Villain(){}
 
 int Villain::getX(){

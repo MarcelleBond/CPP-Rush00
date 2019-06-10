@@ -14,6 +14,8 @@ private:
 public:
     Villain(int y, int x);
     Villain();
+    // Villain(Villain const &src);
+    // Villain &operator=(Villain const &src);
     ~Villain();
     std::string getVillain();
     

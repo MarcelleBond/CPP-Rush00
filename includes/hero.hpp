@@ -19,7 +19,7 @@ public:
     hero(hero const &src);
     hero & operator=(hero const &src);
     std::string getHero();
-    bool Shoot(Villain villain[], int numVillains, obstacle Obstacle[]);
+    bool Shoot(Villain *villain[], int numVillains/* , obstacle *Obstacle[] */);
     void setCoordinates(int y, int x);
     int getX();
     int getY();

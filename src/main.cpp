@@ -39,7 +39,7 @@ int main()
     int score = 0;
     for (int i = 1; i <= 20; i++)
     {
-        addx = (rand() % max_x + 3) + 2;
+        addx = (rand() % max_x - 3) + 2;
         addy = (rand() % max_y - 1) + 1;
         Obstacle[i] = new obstacle(addy, addx);
         mvprintw(Obstacle[i]->getY(), Obstacle[i]->getX(), Obstacle[i]->getObstacle().c_str());
@@ -56,11 +56,10 @@ int main()
     int seconds2 = 0;
     int lives = 1;
     /////////// START GAME LOOP
-    mvprintw(1, 1, "Lives: %d", lives);
-    mvprintw(2, 1, "SCORE: %d", score);
     while ((c = getch()) != 27)
     {
-
+         mvprintw(1, 1, "Lives: %d", lives);
+         mvprintw(2, 1, "SCORE: %d", score);
         mvprintw(3, 1, "Seconds: %d", seconds);
         mvprintw(4, 1, "milli seconds: %d", secondsLeft);
         secondsLeft++;

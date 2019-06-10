@@ -12,9 +12,9 @@ hero::hero(int y, int x){
 hero::~hero(){}
 
 
-bool hero::Shoot(Villain *villain){
+bool hero::Shoot(Villain *villain, int numVil){
     
-    for (size_t i = 0; i < 6; i++)
+    for (int i = 0; i <= numVil; i++)
     {
         /* code */
         mvprintw(villain[i].getY() ,villain[i].getX(), " ");
@@ -23,7 +23,7 @@ bool hero::Shoot(Villain *villain){
 
     }
     
-    for (size_t i = 0; i < 6; i++)
+    for (int i = 0; i <= numVil; i++)
     {
         if (villain[i].getX() == this->x){
             mvprintw(villain[i].getY(), villain[i].getX(), " ");

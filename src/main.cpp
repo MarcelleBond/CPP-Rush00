@@ -11,9 +11,9 @@
 #include "../includes/Villain.hpp"
 
 
-void MoveVillian(Villain *villain)
+void MoveVillian(Villain *villain, int numVil)
 {
-    for (size_t i = 0; i < 6; i++)
+    for (int i = 0; i <= numVil; i++)
     {
         /* code */
         mvprintw(villain[i].getY() ,villain[i].getX(), " ");
@@ -52,7 +52,8 @@ void Die(Villain *villain, hero Hero, int x, int score)
 int main()
 {
     std::srand(time(0));
-    Villain villain[5];
+    int numVil = 5;
+    Villain villain[numVil];
     // WINDOW *vin;
     
     //initscr();
@@ -73,7 +74,7 @@ int main()
     std::string HeroShip = Hero.getHero();
     printw(HeroShip.c_str());
     int add;
-    for (int i = 1; i < 6; i++)
+    for (int i = 0; i <= numVil; i++)
     {
         add = x + i;
         villain[i] = Villain(0, add);
@@ -81,15 +82,36 @@ int main()
     }
 
     mvprintw(1,1,"Score: %d", 0);
-
+    ////////////////////////////////////
+    int secondsLeft = 0;
+    int seconds = 0;
+    int seconds2 = 0;
 
     /////////// START GAME LOOP
     int score = 0;
     while ((c = getch()) != 27)
     {
+
+        mvprintw(2,1,"Seconds: %d", seconds);
+        mvprintw(3,1,"milli seconds: %d", secondsLeft);
+        secondsLeft++;
+        napms(1);
+        if (secondsLeft == 1000)
         {
-            usleep(1666);
-            timeout(60);
+            secondsLeft = 0;
+            seconds++;
+            seconds2++;
+        }
+
+        //{
+        //     usleep(16666);
+        //     timeout(60);
+        // }
+
+        if (seconds2 == 2)
+        {
+           MoveVillian(villain, numVil);
+           seconds2 = 0;
         }
         
 
@@ -97,7 +119,7 @@ int main()
 
                 /* code */
                 mvprintw(Hero.getY()-1,Hero.getX(),"|");
-                if (Hero.Shoot(villain)){
+                if (Hero.Shoot(villain, numVil)){
                     mvprintw(1,1,"Score: %d", score++);
                     mvprintw(40,109,"PEW PEW");
                 }
@@ -113,16 +135,16 @@ int main()
             move(y, ++x);
             Hero.setCoordinates(y, x);
             printw(HeroShip.c_str());
-            MoveVillian(villain);
+            //MoveVillian(villain);
         }
         if (c == 260)
         {
-                    mvprintw(Hero.getY()-1,Hero.getX()," ");
+            mvprintw(Hero.getY()-1,Hero.getX()," ");
             mvprintw(y, x, " ");
             move(y, --x);
             Hero.setCoordinates(y, x);
             printw(HeroShip.c_str());
-            MoveVillian(villain);
+            //MoveVillian(villain);
         }
         Die(villain, Hero, x, score);
         move(10, 0);
